@@ -2,26 +2,41 @@ package com.example.amanda.testingcardview;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
-import java.lang.reflect.Array;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayAdapter<String> mPlayerAdapter;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-                String[] playerNames = {"Amanda","Steven", "Ivy", "The General"};
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
-        mPlayerAdapter = new ArrayAdapter<String>(this,R.layout.list_item, R.id.player_name, playerNames);
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mRecyclerView.setHasFixedSize(true);
 
-        ListView playerList = (ListView) findViewById(R.id.list_view);
-        playerList.setAdapter(mPlayerAdapter);
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+
+                String[] playerNames = {"Amanda","Steven", "Ivy", "The General",
+                        "A", "B", "C", "D", "E",
+                        "A", "B", "C", "D", "E",
+                };
+
+        mAdapter = new MyAdapter(playerNames);
+
+        RecyclerView playerList = (RecyclerView) findViewById(R.id.recycler_view);
+        playerList.setAdapter(mAdapter);
 
     }
 }
